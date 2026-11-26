@@ -1,5 +1,7 @@
 # 21cmFAST 预计算参数图谱
 
+> **统一交互展示入口**：已与 [`21cm-reionization-3d`](https://github.com/HainaHuang729/21cm-reionization-3d) 合并为三视图统一门户 — [3D 体数据 (`cavity.html`)](https://hainahuang729.github.io/21cm-reionization-3d/cavity.html) · [2D 切片库 (`atlas.html`)](https://hainahuang729.github.io/21cm-reionization-3d/atlas.html) · [1D 参数与推断图谱 (`explorer.html`)](https://hainahuang729.github.io/21cm-reionization-3d/explorer.html)。本仓库仍作为核心数据存档与 GitHub Pages 图谱引擎独立维护（支持 `?embed=1` 嵌入模式）。
+
 ## PL / BT 三维对比 / 2026-10-16
 
 入口：[PL × BT Viewer](https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/viewer/compare.html)。

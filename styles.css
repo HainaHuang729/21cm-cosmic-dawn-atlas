@@ -504,3 +504,19 @@ body.motion-ready .reveal.is-visible { opacity: 1; transform: translateY(0); tra
   #mcmc-lf-only { grid-template-columns: minmax(0,1fr); }
   #mcmc-lf-only .inference-figure { justify-self: center; }
 }
+
+.portal-strip {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: 8px 18px; min-height: 34px; padding: 6px var(--page-pad);
+  background: #181a19; color: #f0efe8; border-bottom: 1px solid rgba(255,255,255,0.12);
+  font: 500 11px/1.2 var(--font-mono);
+}
+.portal-strip-brand { letter-spacing: 0.08em; color: #d6a62e; font-size: 10px; }
+.portal-strip-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.portal-strip-links a { color: #c7d1cf; text-decoration: none; border-bottom: 1px solid transparent; padding: 2px 0; }
+.portal-strip-links a:hover { color: #ffffff; border-bottom-color: #df5a2e; }
+.portal-strip-links [aria-current="page"] { color: #ffffff; border-bottom: 2px solid #df5a2e; padding: 2px 0; }
+.portal-strip-open { color: #df5a2e; text-decoration: none; font-size: 10px; }
+.portal-strip-open:hover { text-decoration: underline; }
+html.is-embedded .portal-strip,
+html.is-embedded .mission-hero { display: none; }
