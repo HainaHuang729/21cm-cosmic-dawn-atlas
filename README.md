@@ -2,7 +2,7 @@
 
 ## PL / BT 三维对比 / 2026-10-16
 
-入口：[PL × BT Viewer](https://hainahuang729.github.io/21cmTB/viewer/compare.html)。
+入口：[PL × BT Viewer](https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/viewer/compare.html)。
 两组全新 256³、250 cMpc 模拟，各 85 个真实快照（z=35.216929→6）。
 公网展示 64³ 体积平均档，支持同步相机、时间轴、裁切、X/Y/Z 切片和中英文。
 128³/256³ 暂不托管；不与旧的独立 64³、100 cMpc Viewer 数据混合。

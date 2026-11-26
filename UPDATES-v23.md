@@ -33,7 +33,7 @@ files and reports, use:
 ```sh
 python plotting/redraw_corner_archive.py \
   --project-root /path/to/project_mcmc \
-  --site-root /path/to/21cmTB \
+  --site-root /path/to/21cm-cosmic-dawn-atlas \
   --output /path/to/new-output-directory
 python plotting/test_corner_style.py
 ```
