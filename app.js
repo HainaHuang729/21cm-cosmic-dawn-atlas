@@ -15,6 +15,7 @@ const state = {
   mcmc: {catalog: null, selectedLF: -1, status: "loading"},
   plCache: null,
   parametersCollapsed: false,
+  slicesVisible: false,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -355,6 +356,44 @@ function showUnavailableRun(runId) {
   });
 }
 
+async function ensureSlicesLoaded(serial = state.requestSerial) {
+  const result = state.result;
+  if (!result || serial !== state.requestSerial) return;
+  const tasks = [];
+  if (result.role?.kind === "pl") {
+    if (result.slices && !result.decodedSlices) {
+      tasks.push(
+        loadPLReference({file: `web_data/pl/${result.pl_id}.json`}, true).then((plRef) => {
+          if (serial !== state.requestSerial) return;
+          result.decodedSlices = plRef.decodedSlices;
+          result.decodedPlane = plRef.decodedPlane;
+          result.lightcone = plRef.lightcone;
+        }),
+      );
+    }
+  } else {
+    if (result.slices && !result.decodedSlices) {
+      tasks.push(
+        decodeSlices(result.slices, "web_data/runs").then((decoded) => {
+          if (serial === state.requestSerial) result.decodedSlices = decoded;
+        }),
+      );
+    }
+    if (result.pl_reference && state.plReference?.slices && !state.plReference.decodedSlices) {
+      tasks.push(
+        loadPLReference(result.pl_reference, true).then((plRef) => {
+          if (serial === state.requestSerial) state.plReference = plRef;
+        }),
+      );
+    }
+  }
+  if (!tasks.length) return;
+  await Promise.all(tasks);
+  if (serial !== state.requestSerial) return;
+  if (result.role?.kind === "pl") drawLightcone();
+  drawSlices();
+}
+
 async function loadRun(runId) {
   if (window.AtlasPosterior?.active()) return window.AtlasPosterior.load(runId);
   const usePL = state.parameters.KP_h_Mpc === 0;
@@ -378,7 +417,7 @@ async function loadRun(runId) {
   try {
     if (usePL) {
       if (!reference) throw new AtlasError("plReferenceMissing");
-      const plReference = await loadPLReference({file: `web_data/pl/${reference.pl_id}.json`});
+      const plReference = await loadPLReference({file: `web_data/pl/${reference.pl_id}.json`}, state.slicesVisible);
       if (serial !== state.requestSerial) return;
       if (![...astroNames].every((name) => plReference.astro_parameters[name] === state.parameters[name])) {
         throw new AtlasError("plParameterMismatch");
@@ -391,23 +430,24 @@ async function loadRun(runId) {
         parameters: {...state.parameters},
       };
       showResult();
+      if (state.slicesVisible && !state.result.decodedSlices) ensureSlicesLoaded(serial).catch(() => {});
       return;
     }
     const result = await fetchJSON(versioned(`web_data/runs/${runId}.json`));
     if (serial !== state.requestSerial) return;
     result.decodedPlane = decodePlane(result.lightcone);
-    const plReference = await loadPLReference(result.pl_reference);
+    const plReference = await loadPLReference(result.pl_reference, state.slicesVisible);
+    if (serial !== state.requestSerial) return;
     if (plReference.slices && (
       result.slices.redshift.length !== plReference.slices.redshift.length
       || result.slices.redshift.some(
         (redshift, index) => Math.abs(redshift - plReference.slices.redshift[index]) > 1.0e-4,
       )
     )) throw new AtlasError("redshiftError");
-    result.decodedSlices = await decodeSlices(result.slices, "web_data/runs");
-    if (serial !== state.requestSerial) return;
     state.plReference = plReference;
     state.result = result;
     showResult();
+    if (state.slicesVisible) ensureSlicesLoaded(serial).catch(() => {});
   } catch (error) {
     if (serial !== state.requestSerial) return;
     state.status = {kind: "error", runId, error};
@@ -415,14 +455,40 @@ async function loadRun(runId) {
   }
 }
 
-async function loadPLReference(reference) {
-  // Keep only the latest reference; MS changes at KP=0 reuse the same data,
-  // including an in-flight request, without retaining the whole result library.
-  if (state.plCache?.file === reference.file) return state.plCache.promise;
-  const cache = {file: reference.file};
+async function loadPLReference(reference, needSlices = false) {
+  // Fetch metadata JSON immediately; decode heavy .slices.bin lazily when slices are needed.
+  if (state.plCache?.file === reference.file) {
+    const res = await state.plCache.promise;
+    if (needSlices && res.slices && !res.decodedSlices) {
+      if (!state.plCache.slicesPromise) {
+        state.plCache.slicesPromise = (async () => {
+          res.decodedSlices = await decodeSlices(res.slices, "web_data/pl");
+          const {count, rows, columns, brightness} = res.decodedSlices;
+          const values = new Float32Array(rows * count);
+          for (let frame = 0; frame < count; frame += 1) {
+            for (let row = 0; row < rows; row += 1) {
+              values[row * count + frame] = brightness[frame * rows * columns + row * columns + Math.floor(columns / 2)];
+            }
+          }
+          res.decodedPlane = {values, rows, columns: count};
+          res.lightcone = {
+            redshift: res.slices.redshift,
+            distance_mpc: Array.from({length: rows}, (_, row) => row * res.slices.box_len_mpc / rows),
+          };
+          return res;
+        })().catch((err) => {
+          if (state.plCache) state.plCache.slicesPromise = null;
+          throw err;
+        });
+      }
+      return state.plCache.slicesPromise;
+    }
+    return res;
+  }
+  const cache = {file: reference.file, slicesPromise: null};
   cache.promise = (async () => {
     const result = await fetchJSON(versioned(reference.file));
-    if (result.slices) {
+    if (needSlices && result.slices) {
       result.decodedSlices = await decodeSlices(result.slices, "web_data/pl");
       const {count, rows, columns, brightness} = result.decodedSlices;
       const values = new Float32Array(rows * count);
@@ -712,6 +778,15 @@ function formatKelvin(value) {
 function drawLightcone() {
   if (!state.result) return;
   const {context: ctx, width, height} = canvasContext($("#lightcone-chart"));
+  if (!state.result.decodedPlane) {
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = plotPalette.text;
+    ctx.font = `12px ${PLOT_MONO}`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(state.language === "zh" ? "正在载入光锥剖面…" : "Loading lightcone plane…", width / 2, height / 2);
+    return;
+  }
   const margin = {left: 68, right: 20, top: 14, bottom: 48};
   const {values, rows, columns} = state.result.decodedPlane;
   const imageCanvas = document.createElement("canvas"); imageCanvas.width = columns; imageCanvas.height = rows;
@@ -842,6 +917,27 @@ function drawSlices() {
   if (!state.result || state.sliceIndex === null) return;
   const bplDecoded = state.result.decodedSlices;
   const plDecoded = state.plReference ? state.plReference.decodedSlices : null;
+
+  if (!bplDecoded) {
+    const label = state.language === "zh" ? "滚动至此按需载入二维切片…" : "Scroll here to load 2D slices…";
+    sliceFieldSpecs.forEach((field) => {
+      [$(field.canvas), $(field.plCanvas)].forEach((canvas) => {
+        const {context: ctx, width, height} = canvasContext(canvas);
+        ctx.fillStyle = "#f4f6f7";
+        ctx.fillRect(0, 0, width, height);
+        ctx.strokeStyle = plotPalette.grid;
+        ctx.strokeRect(0.5, 0.5, width - 1, height - 1);
+        ctx.fillStyle = plotPalette.text;
+        ctx.font = `11px ${PLOT_MONO}`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(label, width / 2, height / 2);
+      });
+      $(field.output).textContent = "—";
+      $(field.plOutput).textContent = "—";
+    });
+    return;
+  }
 
   sliceFieldSpecs.forEach((field) => {
     const scale = sharedFieldScale(field, bplDecoded, plDecoded);
@@ -1064,8 +1160,20 @@ $("#reset-button").addEventListener("click", resetControls);
 document.querySelectorAll("[data-language]").forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.language));
 });
-$("#slice-redshift").addEventListener("input", () => { updateSliceControl(); drawSlices(); });
-$("#slice-play").addEventListener("click", () => setSlicePlaying(!state.sliceTimer));
+$("#slice-redshift").addEventListener("input", () => { state.slicesVisible = true; ensureSlicesLoaded().catch(() => {}); updateSliceControl(); drawSlices(); });
+$("#slice-play").addEventListener("click", () => { state.slicesVisible = true; ensureSlicesLoaded().catch(() => {}); setSlicePlaying(!state.sliceTimer); });
+if ("IntersectionObserver" in window && $("#fields-section")) {
+  const sliceObserver = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) {
+      state.slicesVisible = true;
+      ensureSlicesLoaded().catch(() => {});
+      sliceObserver.disconnect();
+    }
+  }, {rootMargin: "250px"});
+  sliceObserver.observe($("#fields-section"));
+} else {
+  state.slicesVisible = true;
+}
 $("#main-fullscreen").addEventListener("click", () => {
   if (document.fullscreenElement) document.exitFullscreen();
   else $("#main-map-card").requestFullscreen();

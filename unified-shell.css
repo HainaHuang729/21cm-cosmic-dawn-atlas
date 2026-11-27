@@ -1,0 +1,182 @@
+/* Shared top shell and color tokens across all three 21 cm visualization views */
+:root {
+  --site-bg: #e8e7df;
+  --site-surface: #f0efe8;
+  --site-raised: #f5f4ed;
+  --site-ink: #181a19;
+  --site-muted: #606562;
+  --site-line: rgba(24, 26, 25, 0.14);
+  --site-line-strong: rgba(24, 26, 25, 0.35);
+  --site-accent: #3b7a87;
+  --site-orange: #df5a2e;
+  --site-red: #b84b3e;
+  --site-yellow: #d6a62e;
+  --site-tricolor: linear-gradient(90deg, var(--site-red) 0 33.333%, var(--site-yellow) 33.333% 66.666%, #4d8f9c 66.666% 100%);
+  --site-font-display: "Avenir Next", "Century Gothic", Futura, "Helvetica Neue", Arial, "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+  --site-font-body: Inter, "Helvetica Neue", Helvetica, Arial, "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+  --site-font-mono: "IBM Plex Mono", "JetBrains Mono", Consolas, monospace;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  min-height: 56px;
+  padding: 0 clamp(16px, 3vw, 44px);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: stretch;
+  gap: 16px;
+  background: var(--site-surface);
+  border-bottom: 1px solid var(--site-line-strong);
+  color: var(--site-ink);
+  font-family: var(--site-font-body);
+}
+
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--site-tricolor);
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  padding-right: 16px;
+  border-right: 1px solid var(--site-line);
+}
+
+.site-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--site-ink);
+  color: var(--site-orange);
+  font: 700 12px/1 var(--site-font-mono);
+}
+
+.site-brand-text {
+  font: 700 12px/1 var(--site-font-display);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.site-nav {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.site-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  font: 600 13px/1 var(--site-font-display);
+  color: var(--site-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--site-ink);
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--site-ink);
+  border-bottom-color: var(--site-orange);
+}
+
+.site-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 14px;
+  border-left: 1px solid var(--site-line);
+}
+
+.site-home-link {
+  font: 600 12px/1 var(--site-font-body);
+  color: var(--site-accent);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 8px 6px;
+}
+
+.site-home-link:hover {
+  text-decoration: underline;
+}
+
+.site-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border-left: 1px solid var(--site-line);
+  padding-left: 8px;
+}
+
+.site-lang button {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  min-height: 36px;
+  min-width: 36px;
+  padding: 4px 6px;
+  font: 700 12px/1 var(--site-font-body);
+  color: var(--site-muted);
+}
+
+.site-lang button[aria-pressed="true"] {
+  color: var(--site-ink);
+  border-bottom-color: var(--site-orange);
+}
+
+html.is-embedded .site-header {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+    padding: 0 14px;
+    gap: 8px;
+  }
+  .site-brand {
+    border-right: 0;
+    padding-right: 0;
+    min-height: 48px;
+  }
+  .site-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-height: 44px;
+    border-top: 1px solid var(--site-line);
+    justify-content: space-between;
+  }
+  .site-nav a {
+    flex: 1;
+    justify-content: center;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+  .site-actions {
+    grid-column: 2;
+    grid-row: 1;
+    border-left: 0;
+    padding-left: 0;
+  }
+}

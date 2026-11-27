@@ -287,7 +287,7 @@ function selectSource(model,key){
   const saved=savedStates.get(`${model}/${key}`);Object.assign(settings,saved??sampleDefaults(key));
   if(!saved)settings.threshold=epochThreshold(key,preset().defaultEpoch,model);
   frameIndex=nearest(frames[key],z,'redshift');clearDisplay();
-  configureField();load(frameIndex);warmActiveField();
+  configureField();load(frameIndex);
 }
 document.querySelectorAll('[data-field]').forEach(button=>button.addEventListener('click',()=>selectSource(modelKey,button.dataset.field)));
 $('sample-model').addEventListener('change',()=>selectSource($('sample-model').value,fieldKey));
@@ -311,7 +311,7 @@ async function init(){
     document.querySelectorAll('[data-field],#sample-model').forEach(control=>control.disabled=false);
     const requestedZ=requested.has('z')?Number(requested.get('z')):NaN;
     frameIndex=Number.isFinite(requestedZ)?nearest(frames[fieldKey],requestedZ,'redshift'):presetIndices[fieldKey][preset().defaultEpoch];
-    configureField();await load(frameIndex);warmActiveField();
+    configureField();await load(frameIndex);
   }catch(e){$('sample-loading').hidden=false;$('sample-loading').textContent=e.message;$('sample-status').textContent=e.message;$('sample-status').classList.add('error');}
 }
 configureField();init();

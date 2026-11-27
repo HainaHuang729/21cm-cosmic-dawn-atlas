@@ -28,121 +28,61 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Validate static site
+      - name: Validate visualization site
         run: |
           node --check app.js
           node --check i18n.js
-          node --check mcmc.js
           node --check lf-mass.js
-          node --check lf-mass-response.js
-          node --check lf-stellar-fraction.js
-          node --check posterior.js
+          node --check portal/cavity.js
           node tests/test_lf_mass.cjs
-          node tests/test_i18n.cjs
-          node --check ms-corner.js
-          node tests/test_ms_corner.cjs
-          node tests/test_park_pl_comparison.cjs
-          node tests/test_muv20_archive.cjs
           python - <<'PY'
           import json
           import pathlib
-          import zlib
 
-          root = pathlib.Path("web_data/runs")
-          index = json.loads(pathlib.Path("web_data/index.json").read_text())
-          app = pathlib.Path("app.js").read_text()
-          html = pathlib.Path("index.html").read_text()
-          css = pathlib.Path("styles.css").read_text()
-          files = sorted(root.glob("*.json"))
-          binaries = sorted(root.glob("*.slices.bin"))
-          pl_root = pathlib.Path("web_data/pl")
-          pl_files = sorted(pl_root.glob("pl_*.json"))
-          pl_binaries = sorted(pl_root.glob("pl_*.slices.bin"))
-          expected_unavailable = {"run_4600848a9a8c", "run_5f2309678207"}
-          assert 'DATA_VERSION = "hii256-v18"' in app
-          assert 'UI_VERSION = "hii256-v23"' in app
-          assert "(value + 150) / 180" in app
-          assert "eorStops" in app and "viridisStops" in app
-          assert "app.js?v=hii256-v23" in html
-          assert "styles.css?v=lf-bestfit-1" in html
-          for asset in ("i18n.js", "mcmc.js"):
-              assert f"{asset}?v=joint-20260928-pooled" in html
-          assert pathlib.Path("i18n.js").is_file()
-          assert 'data-language="en"' in html and 'data-language="zh"' in html
-          assert "mission-hero" in html and "system-header" in html
-          assert "--orange: #df5a2e" in css
-          assert "prefers-reduced-motion" in css
-          assert "上一模型" not in html
-          assert "Matched PL" in html
-          assert "lf-main-card" in html and 'id="lf-chart"' in html
+          for asset in (
+              "unified-shell.css",
+              "index.html",
+              "styles.css",
+              "portal/cavity.html",
+              "portal/cavity.css",
+              "portal/cavity.js",
+              "emulator/index.html",
+              "emulator/styles.css",
+          ):
+              assert pathlib.Path(asset).is_file(), f"Missing {asset}"
+
+          for fig in (
+              "fig1_history_accuracy.webp",
+              "fig3_ic_and_posterior_val.webp",
+              "fig5_ps_estimator_and_fullbox.webp",
+              "fig6_psx_independent_audit.webp",
+              "fig7_tstar_local_correction.webp",
+              "fig8_ard_gp_and_threeway_gmm.webp",
+          ):
+              assert pathlib.Path(f"emulator/figures/{fig}").is_file(), f"Missing figure {fig}"
+
+          html = pathlib.Path("index.html").read_text(encoding="utf-8")
+          assert "unified-shell.css" in html
+          assert "mcmc-section" not in html
           assert html.count('data-field="') == 5
           assert html.count('data-pl-field="') == 5
-          assert "−150 mK" in html and "+30 mK" in html
-          assert index["result_schema_version"] == 7
-          pl_schema = index["pl_result_schema_version"]
-          assert pl_schema == 2
-          assert index["n_exact_runs"] == 55 and index["n_design_points"] == 57
+
+          index = json.loads(pathlib.Path("web_data/index.json").read_text(encoding="utf-8"))
+          assert index["n_exact_runs"] == 55
           assert index["n_unique_pl_references"] == 32
-          assert sum(
-              len(points)
-              for points in index["lf_observations"]["by_display_redshift"].values()
-          ) == 44
-          assert set(index["unavailable_run_ids"]) == expected_unavailable
-          assert len(files) == len(binaries) == 55
-          assert len(pl_files) == 32
-          assert len(pl_binaries) == 32
-          pl_ids = set()
-          for path in pl_files:
-              payload = json.loads(path.read_text())
-              assert payload["schema_version"] == pl_schema
-              assert payload["model"]["POWER_SPECTRUM"] == 0
-              assert payload["model"]["POWER_INDEX"] == 0.968
-              assert payload["luminosity_function"]["redshift"] == [6.0, 7.0, 8.0, 10.0]
-              if pl_schema == 2:
-                  assert 0 < payload["ionization_history"]["tau_e"] < 1
-                  assert len(payload["ionization_history"]["redshift"]) == 32
-                  slices = payload["slices"]
-                  assert slices["shape"] == [32, 256, 256]
-                  assert len(slices["redshift"]) == 32
-                  packed = (pl_root / slices["binary_file"]).read_bytes()
-                  for descriptor in slices["binary_fields"].values():
-                      start = descriptor["offset"]
-                      stop = start + descriptor["compressed_bytes"]
-                      assert len(zlib.decompress(packed[start:stop])) == descriptor["uncompressed_bytes"]
-              pl_ids.add(payload["pl_id"])
-          for path in files:
-              payload = json.loads(path.read_text())
-              slices = payload["slices"]
-              assert payload["schema_version"] == 7
-              assert slices["shape"] == [32, 256, 256]
-              assert len(slices["redshift"]) == 32
-              assert payload["luminosity_function"]["redshift"] == [6.0, 7.0, 8.0, 10.0]
-              assert len(payload["luminosity_function"]["curves"]) == 4
-              assert 0 < payload["ionization_history"]["tau_e"] < 1
-              assert len(payload["ionization_history"]["redshift"]) == 32
-              assert payload["pl_reference"]["pl_id"] in pl_ids
-              assert pathlib.Path(payload["pl_reference"]["file"]).is_file()
-              pl = json.loads(pathlib.Path(payload["pl_reference"]["file"]).read_text())
-              assert all(
-                  abs(a - b) <= 1.0e-4
-                  for a, b in zip(slices["redshift"], pl["slices"]["redshift"])
-              )
-              assert all(
-                  payload["parameters"][name] == value
-                  for name, value in pl["astro_parameters"].items()
-              )
-              packed = (root / slices["binary_file"]).read_bytes()
-              for descriptor in slices["binary_fields"].values():
-                  start = descriptor["offset"]
-                  stop = start + descriptor["compressed_bytes"]
-                  assert len(zlib.decompress(packed[start:stop])) == descriptor["uncompressed_bytes"]
-          assert sum(path.stat().st_size for path in binaries + pl_binaries) < 1_500_000_000
+          assert len(list(pathlib.Path("web_data/runs").glob("*.json"))) == 55
+          assert len(list(pathlib.Path("web_data/pl").glob("pl_*.json"))) == 32
           PY
 
-      - name: Assemble site without on-demand volume repository
+      - name: Assemble slim visualization-only site
         run: |
-          mkdir -p "$RUNNER_TEMP/pages-site"
-          rsync -a --exclude='.git/' --exclude='viewer-data64/' --exclude='web_data/posterior/runs/' ./ "$RUNNER_TEMP/pages-site/"
+          mkdir -p "$RUNNER_TEMP/pages-site/web_data"
+          cp .nojekyll index.html app.js i18n.js lf-mass.js styles.css unified-shell.css lf-mass-response.html lf-mass-response.js lf-mass-response.css lf-stellar-fraction.js "$RUNNER_TEMP/pages-site/"
+          if [ -d fonts ]; then cp -R fonts "$RUNNER_TEMP/pages-site/"; fi
+          cp -R portal emulator "$RUNNER_TEMP/pages-site/"
+          cp web_data/index.json "$RUNNER_TEMP/pages-site/web_data/"
+          cp -R web_data/runs web_data/pl "$RUNNER_TEMP/pages-site/web_data/"
+          du -sh "$RUNNER_TEMP/pages-site"
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v4

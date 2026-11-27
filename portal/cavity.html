@@ -2,19 +2,26 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="light"><title>21cm · 三维 Viewer</title>
+  <meta name="color-scheme" content="light"><title>21 cm 三维体数据 — 宇宙黎明可视化</title>
   <link rel="preload" href="./assets/fonts/jost-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./cavity.css?v=quiet-toggle-20261018">
+  <link rel="stylesheet" href="../unified-shell.css?v=20261127">
+  <link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./cavity.css?v=unified-20261127">
+  <script>if (new URLSearchParams(location.search).get("embed") === "1") document.documentElement.classList.add("is-embedded");</script>
 </head>
 <body class="cavity-page controls-collapsed">
-  <header class="sample-header">
-    <a class="sample-brand" href="../index.html">21<span>cm</span><i aria-hidden="true"></i></a>
-    <div class="sample-heading"><h1 id="sample-title">再电离的空腔</h1><p id="sample-subtitle">真实中性氢场 · 辉光与剖切</p></div>
-    <nav class="portal-nav" aria-label="21cm 统一视图">
-      <a href="../index.html"><small>1D/2D</small>参数与切片</a>
-      <a href="./cavity.html" aria-current="page"><small>3D</small>体数据</a>
-      <a href="../emulator/index.html"><small>EMU</small>模拟器</a>
+  <header class="site-header">
+    <a class="site-brand" href="../index.html"><span class="site-brand-mark">21</span><span class="site-brand-text">COSMIC DAWN</span></a>
+    <nav class="site-nav" aria-label="21cm 统一视图">
+      <a href="../index.html">演化与切片</a>
+      <a href="./cavity.html" aria-current="page">3D 体数据</a>
+      <a href="../emulator/index.html">模拟器与后验</a>
     </nav>
+    <div class="site-actions">
+      <a class="site-home-link" href="https://formless-observatory.wuxiangguan.workers.dev/research/21cmfast-parameter-atlas">无相观 ↗</a>
+    </div>
+  </header>
+  <header class="sample-header">
+    <div class="sample-heading"><h1 id="sample-title">再电离的空腔</h1><p id="sample-subtitle">真实中性氢场 · 辉光与剖切</p></div>
     <label class="sample-model">模型<select id="sample-model" aria-label="三维模型" disabled><option value="pl">PL · 250 cMpc</option><option value="bt">BT · 250 cMpc</option></select></label>
     <nav class="field-switch" aria-label="三维物理量"><button data-field="xH" aria-pressed="true" disabled>中性氢</button><button data-field="density" aria-pressed="false" disabled>密度</button><button data-field="brightness_temperature" aria-pressed="false" disabled>亮温</button></nav>
   </header>
@@ -44,7 +51,7 @@
         </div>
       </div>
     </section>
-    <div hidden><p id="sample-explainer"></p><p id="sample-convention"></p><p id="sample-status" role="status">读取本地真实快照…</p></div>
+    <div hidden><p id="sample-explainer"></p><p id="sample-convention"></p><p id="sample-status" role="status">读取当前红移真实快照…</p></div>
   </main>
   <footer class="sample-controls is-collapsed" id="sample-controls" aria-label="三维调参区">
     <div class="sample-panel" id="sample-panel" hidden>
@@ -59,6 +66,6 @@
     </div>
     <button class="sample-toggle" id="sample-toggle" aria-expanded="false" aria-controls="sample-panel" aria-label="展开参数区"><span id="sample-toggle-label">展开参数</span><span id="sample-toggle-mark" aria-hidden="true">+</span></button>
   </footer>
-  <script type="module" src="./cavity.js?v=bt-complete-20261018"></script>
+  <script type="module" src="./cavity.js?v=unified-20261127"></script>
 </body>
 </html>
