@@ -1,0 +1,19 @@
+# 21cm Cosmic Dawn Atlas — Unified Visualization Portal
+
+> Interactive cosmological visualization suite by Haina Huang (CUHK Astrophysics) covering precomputed 21cmFAST simulations, 3D reionization volumes, and PSX-emu v1.0 surrogate/posterior results.
+
+## Views
+1. **Parameter & 2D Slice Atlas** (`https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/`):
+   - 55 exact broken-power-law (BPL) and 32 matched power-law (PL) 21cmFAST simulations in 250 cMpc boxes (256^3 grid).
+   - Interactive brightness-temperature lightcones (z = 35 to z = 6), global signal δT_b(z), reionization history ξ(z) & τ_e, HST/JWST UV luminosity functions, and on-demand 32-redshift 2D spatial slices across 5 physical fields.
+2. **3D Glow Volume Explorer** (`https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/portal/cavity.html`):
+   - Real-time WebGL volume renderer publishing all 85 validated PL and BT redshift snapshots for neutral hydrogen (xH), 128^3 density contrast, and 21 cm brightness temperature with per-frame SHA-256 verification.
+3. **PSX-emu v1.0 Emulator & Posteriors** (`https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/emulator/`):
+   - Visual gallery of the 100k-sample reionization history & 21 cm power-spectrum surrogate (`PSX-emu v1.0`), 4 Matérn-5/2 ARD-GP local correction patches, independent out-of-sample audits, and 3-way 8D Stretch+GMM MCMC constraints.
+
+## Linked Repositories & Author Portal
+- Author Portal (Formless Observatory): https://formless-observatory.wuxiangguan.workers.dev/research/21cmfast-parameter-atlas
+- Data Archive Repo: https://github.com/HainaHuang729/21cm-cosmic-dawn-atlas
+- Track A PRD Repo: https://github.com/HainaHuang729/early-galaxies-reionization-bt
+- Track B Emulator Repo: https://github.com/HainaHuang729/21cm-reionization-emulator
+- Track D UV LF Clustering Repo: https://github.com/HainaHuang729/uvlf-clustering-bt

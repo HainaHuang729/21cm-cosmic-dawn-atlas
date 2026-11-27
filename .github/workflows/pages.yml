@@ -40,6 +40,9 @@ jobs:
           import pathlib
 
           for asset in (
+              "robots.txt",
+              "sitemap.xml",
+              "llms.txt",
               "unified-shell.css",
               "index.html",
               "styles.css",
@@ -77,7 +80,7 @@ jobs:
       - name: Assemble slim visualization-only site
         run: |
           mkdir -p "$RUNNER_TEMP/pages-site/web_data"
-          cp .nojekyll index.html app.js i18n.js lf-mass.js styles.css unified-shell.css lf-mass-response.html lf-mass-response.js lf-mass-response.css lf-stellar-fraction.js "$RUNNER_TEMP/pages-site/"
+          cp .nojekyll robots.txt sitemap.xml llms.txt index.html app.js i18n.js lf-mass.js styles.css unified-shell.css lf-mass-response.html lf-mass-response.js lf-mass-response.css lf-stellar-fraction.js "$RUNNER_TEMP/pages-site/"
           if [ -d fonts ]; then cp -R fonts "$RUNNER_TEMP/pages-site/"; fi
           cp -R portal emulator "$RUNNER_TEMP/pages-site/"
           cp web_data/index.json "$RUNNER_TEMP/pages-site/web_data/"
