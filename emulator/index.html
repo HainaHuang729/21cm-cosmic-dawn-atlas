@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="PSX-emu v1.0 surrogate and 8D posterior visual gallery: 100k 21cmFAST reionization histories, 21 cm power spectra, 4 Matérn-5/2 ARD-GP patches, and 3-way 8D Stretch+GMM MCMC checks.">
+  <meta name="description" content="PSX-emu v1.0 &amp; 10D HERA-272 visual gallery: 10D joint (kp, ms) primordial power constraints, mf10d_ft_8seed multi-fidelity validation, 100k 21cmFAST histories, and HERA-272 3-way 8D posteriors.">
   <meta name="author" content="Haina Huang">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/emulator/">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="PSX-emu v1.0 · Reionization &amp; 21 cm Power-Spectrum Emulator">
-  <meta property="og:description" content="Visual summary of 100k reionization-history emulation, 21 cm power-spectrum validation, 4 Matérn-5/2 ARD-GP patches, and 3-way 8D MCMC constraints.">
+  <meta property="og:title" content="PSX-emu v1.0 &amp; 10D HERA-272 · 21 cm Emulator &amp; Posterior Visuals">
+  <meta property="og:description" content="Visual gallery of 10D joint (kp, ms) HERA-272 constraints, mf10d_ft_8seed multi-fidelity validation, 100k reionization-history emulation, and 3-way 8D Stretch+GMM posteriors.">
   <meta property="og:url" content="https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/emulator/">
-  <meta property="og:image" content="https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/emulator/figures/fig8_ard_gp_and_threeway_gmm.webp">
+  <meta property="og:image" content="https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/emulator/figures/mf10d_kp_ms_constraints.webp">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#f7f5f0">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":["ScholarlyArticle","SoftwareSourceCode"],"name":"PSX-emu v1.0: Reionization History & 21 cm Power-Spectrum Emulator","headline":"PSX-emu v1.0 Emulator & 8D Joint Posterior Visuals","description":"100k-sample 21cmFAST surrogate with 4 Matérn-5/2 ARD-GP residual patches and 3-way 8D Stretch+GMM MCMC verification.","url":"https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/emulator/","codeRepository":"https://github.com/HainaHuang729/21cm-reionization-emulator","author":{"@type":"Person","name":"Haina Huang","url":"https://formless-observatory.wuxiangguan.workers.dev/"}}</script>
-  <title>PSX-emu v1.0 · 21 cm 模拟器与后验可视化</title>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":["ScholarlyArticle","SoftwareSourceCode"],"name":"PSX-emu v1.0 & 10D HERA-272: Reionization History & 21 cm Power-Spectrum Emulator","headline":"PSX-emu v1.0 & 10D HERA-272 Joint Posterior Visuals","description":"100k-sample 21cmFAST surrogate, 10D multi-fidelity HERA-272 fine-tuned emulator (mf10d_ft_8seed), Matérn-5/2 ARD-GP residual patches, and strictly converged 8D & 10D MCMC verification.","url":"https://hainahuang729.github.io/21cm-cosmic-dawn-atlas/emulator/","codeRepository":"https://github.com/HainaHuang729/21cm-reionization-emulator","author":{"@type":"Person","name":"Haina Huang","url":"https://formless-observatory.wuxiangguan.workers.dev/"}}</script>
+  <title>PSX-emu v1.0 &amp; 10D HERA-272 · 21 cm 模拟器与后验可视化</title>
   <link rel="stylesheet" href="../unified-shell.css?v=20261127">
   <link rel="stylesheet" href="./styles.css?v=20261127">
   <script>if (new URLSearchParams(location.search).get("embed") === "1") document.documentElement.classList.add("is-embedded");</script>
@@ -40,9 +40,9 @@
   <main class="emu-main">
     <section class="emu-intro" aria-labelledby="emu-title">
       <div>
-        <p class="emu-kicker">PSX-emu v1.0 · 100k 21cmFAST · 4 MATÉRN-5/2 ARD-GP PATCHES</p>
-        <h1 id="emu-title" data-zh="PSX-emu v1.0 模拟器与 8D 联合后验可视化" data-en="PSX-emu v1.0 Emulator &amp; 8D Posterior Visuals">PSX-emu v1.0 模拟器与 8D 联合后验可视化</h1>
-        <p data-zh="展示 100k 再电离历史代理模型精度、21 cm 功率谱全盒检验、4 项 ARD-GP 残差补丁以及 3 路 8D MCMC（Stretch + GMM）联合约束结果（点击任意图谱可全屏放大）。" data-en="Visual summary of 100k reionization-history emulation, full-box 21 cm power-spectrum validation, 4 Matérn-5/2 ARD-GP patches, and 3-way 8D Stretch+GMM MCMC posteriors (click any figure to enlarge).">展示 100k 再电离历史代理模型精度、21 cm 功率谱全盒检验、4 项 ARD-GP 残差补丁以及 3 路 8D MCMC（Stretch + GMM）联合约束结果（点击任意图谱可全屏放大）。</p>
+        <p class="emu-kicker">PSX-emu v1.0 · 10D HERA-272 (mf10d_ft_8seed) · 100k 21cmFAST</p>
+        <h1 id="emu-title" data-zh="PSX-emu v1.0 与 10D HERA-272 联合后验可视化" data-en="PSX-emu v1.0 &amp; 10D HERA-272 Posterior Visuals">PSX-emu v1.0 与 10D HERA-272 联合后验可视化</h1>
+        <p data-zh="展示最新 10D 自由 (kₚ, mₛ) HERA-272 联合约束、mf10d_ft_8seed 多保真验证、HERA-272 三路严格收敛 8D 链及 100k 再电离历史与功率谱代理审计（点击任意图谱可全屏放大）。" data-en="Visual gallery of 10D free-(kₚ, mₛ) HERA-272 joint constraints, mf10d_ft_8seed multi-fidelity validation, HERA-272 3-way converged 8D chains, and 100k reionization-history &amp; 21 cm PS audits (click any figure to enlarge).">展示最新 10D 自由 (kₚ, mₛ) HERA-272 联合约束、mf10d_ft_8seed 多保真验证、HERA-272 三路严格收敛 8D 链及 100k 再电离历史与功率谱代理审计（点击任意图谱可全屏放大）。</p>
       </div>
       <div class="emu-links">
         <a href="https://github.com/HainaHuang729/21cm-reionization-emulator" target="_blank" rel="noopener">GitHub (Emulator) ↗</a>
@@ -51,64 +51,84 @@
       </div>
     </section>
 
-    <section class="emu-grid" aria-label="PSX-emu v1.0 figures">
+    <section class="emu-grid" aria-label="PSX-emu v1.0 and 10D HERA-272 figures">
       <figure class="emu-card">
-        <button class="emu-thumb" type="button" data-zoom="./figures/fig1_history_accuracy.webp" data-zh="01 · 100k 再电离历史代理精度" data-en="01 · 100k Reionization History Accuracy">
-          <img src="./figures/fig1_history_accuracy.webp" alt="100k reionization history accuracy" width="1600" height="1029" loading="eager" decoding="async">
+        <button class="emu-thumb" type="button" data-zoom="./figures/mf10d_kp_ms_constraints.webp" data-zh="01 · 10D HERA-272 联合约束 (kₚ, mₛ)" data-en="01 · 10D HERA-272 Joint (kₚ, mₛ) Constraints">
+          <img src="./figures/mf10d_kp_ms_constraints.webp" alt="10D HERA-272 joint constraints on kp and ms" width="1800" height="552" loading="eager" decoding="async">
         </button>
         <figcaption class="emu-caption">
-          <div class="emu-caption-head"><h2 data-zh="再电离历史代理精度" data-en="Reionization History Accuracy">再电离历史代理精度</h2><span class="emu-caption-num">FIG 01</span></div>
-          <p data-zh="100k 训练集下的全局中性氢历史与光学深度 τₑ 预测误差分布。" data-en="Validation accuracy across global neutral-hydrogen histories and optical depth τₑ.">100k 训练集下的全局中性氢历史与光学深度 τₑ 预测误差分布。</p>
+          <div class="emu-caption-head"><h2 data-zh="10D HERA-272 联合约束 (kₚ, mₛ)" data-en="10D HERA-272 (kₚ, mₛ) Constraints">10D HERA-272 联合约束 (kₚ, mₛ)</h2><span class="emu-caption-num">FIG 01</span></div>
+          <p data-zh="加入 HERA-272 21 cm 功率谱后在 10 维自由参数空间中打破简并，直接区分 PL 与 BT(3, 2.0) 初始谱。" data-en="Joint HERA-272 21 cm PS + UV LF + τₑ/xHI inference in full 10D space cleanly separating PL and BT(3, 2.0).">加入 HERA-272 21 cm 功率谱后在 10 维自由参数空间中打破简并，直接区分 PL 与 BT(3, 2.0) 初始谱。</p>
         </figcaption>
       </figure>
 
       <figure class="emu-card">
-        <button class="emu-thumb" type="button" data-zoom="./figures/fig8_ard_gp_and_threeway_gmm.webp" data-zh="02 · 4 项 ARD-GP 补丁与 3 路 8D MCMC 链" data-en="02 · 4 ARD-GP Patches &amp; 3-Way 8D MCMC Chains">
-          <img src="./figures/fig8_ard_gp_and_threeway_gmm.webp" alt="4 ARD-GP patches and 3-way 8D Stretch+GMM MCMC" width="1600" height="772" loading="eager" decoding="async">
+        <button class="emu-thumb" type="button" data-zoom="./figures/mf10d_pl_vs_bt3_10d_corner.webp" data-zh="02 · 10D PL vs BT(3, 2.0) 全参数联合后验" data-en="02 · 10D PL vs BT(3, 2.0) Full Joint Corner">
+          <img src="./figures/mf10d_pl_vs_bt3_10d_corner.webp" alt="10D PL vs BT3 joint posterior corner plot" width="1800" height="1800" loading="eager" decoding="async">
         </button>
         <figcaption class="emu-caption">
-          <div class="emu-caption-head"><h2 data-zh="4 项 ARD-GP 补丁与 3 路 8D MCMC" data-en="4 ARD-GP Patches &amp; 3-Way 8D MCMC">4 项 ARD-GP 补丁与 3 路 8D MCMC</h2><span class="emu-caption-num">FIG 02</span></div>
-          <p data-zh="Matérn-5/2 ARD-GP 局部补丁响应及 3 路 Stretch + GMM 8D 联合后验对比。" data-en="Matérn-5/2 ARD-GP local correction patches and 3-way 8D Stretch+GMM posterior chains.">Matérn-5/2 ARD-GP 局部补丁响应及 3 路 Stretch + GMM 8D 联合后验对比。</p>
+          <div class="emu-caption-head"><h2 data-zh="10D 全参数联合后验 Corner" data-en="10D Full Joint Posterior Corner">10D 全参数联合后验 Corner</h2><span class="emu-caption-num">FIG 02</span></div>
+          <p data-zh="160k 步严格收敛（max R̂ ≤ 1.0055，min N/IAT ≥ 425）的 8 天体物理 + 2 初始谱全 10D 联合后验对比。" data-en="Strictly converged 160k-step chains (max R̂ ≤ 1.0055, min N/IAT ≥ 425) across 8 astrophysical + 2 spectral parameters.">160k 步严格收敛（max R̂ ≤ 1.0055，min N/IAT ≥ 425）的 8 天体物理 + 2 初始谱全 10D 联合后验对比。</p>
         </figcaption>
       </figure>
 
       <figure class="emu-card">
-        <button class="emu-thumb" type="button" data-zoom="./figures/fig5_ps_estimator_and_fullbox.webp" data-zh="03 · 21 cm 功率谱预测与全盒实测对比" data-en="03 · 21 cm Power Spectrum vs Full Box">
+        <button class="emu-thumb" type="button" data-zoom="./figures/mf10d_model_validation_v2.webp" data-zh="03 · 10D 多保真微调模型验证 (mf10d_ft_8seed)" data-en="03 · 10D Multi-Fidelity Model Validation">
+          <img src="./figures/mf10d_model_validation_v2.webp" alt="10D multi-fidelity fine-tuned emulator validation" width="1800" height="694" loading="lazy" decoding="async">
+        </button>
+        <figcaption class="emu-caption">
+          <div class="emu-caption-head"><h2 data-zh="10D 多保真微调模型验证" data-en="10D Multi-Fidelity Validation">10D 多保真微调模型验证</h2><span class="emu-caption-num">FIG 03</span></div>
+          <p data-zh="mf10d_ft_8seed 在未见参数点与后验 16 抽样原生 21cmFAST 复检中的精度审计（L₂ p90 = 0.1530）。" data-en="Held-out and 16-draw native 21cmFAST in-posterior audit for mf10d_ft_8seed (in-posterior L₂ p90 = 0.1530).">mf10d_ft_8seed 在未见参数点与后验 16 抽样原生 21cmFAST 复检中的精度审计（L₂ p90 = 0.1530）。</p>
+        </figcaption>
+      </figure>
+
+      <figure class="emu-card">
+        <button class="emu-thumb" type="button" data-zoom="./figures/threeway_hera272_standard20_corner.webp" data-zh="04 · HERA-272 三路严格收敛 8D 对比" data-en="04 · HERA-272 3-Way Converged 8D Corner">
+          <img src="./figures/threeway_hera272_standard20_corner.webp" alt="HERA-272 3-way converged 8D corner plot" width="1800" height="1800" loading="lazy" decoding="async">
+        </button>
+        <figcaption class="emu-caption">
+          <div class="emu-caption-head"><h2 data-zh="HERA-272 三路严格收敛 8D 链" data-en="HERA-272 3-Way 8D Chains">HERA-272 三路严格收敛 8D 链</h2><span class="emu-caption-num">FIG 04</span></div>
+          <p data-zh="PL、BT(10, 2.5) 与 BT(3, 2.0) 三组固定谱在 272-bin HERA-331 下的 8D 严格收敛后验（max R̂ ≤ 1.004）。" data-en="Strictly converged 8D posteriors (max R̂ ≤ 1.004) for PL, BT(10, 2.5), and BT(3, 2.0) under 272-bin HERA-331.">PL、BT(10, 2.5) 与 BT(3, 2.0) 三组固定谱在 272-bin HERA-331 下的 8D 严格收敛后验（max R̂ ≤ 1.004）。</p>
+        </figcaption>
+      </figure>
+
+      <figure class="emu-card">
+        <button class="emu-thumb" type="button" data-zoom="./figures/fig1_history_accuracy.webp" data-zh="05 · 100k 再电离历史代理精度" data-en="05 · 100k Reionization History Accuracy">
+          <img src="./figures/fig1_history_accuracy.webp" alt="100k reionization history accuracy" width="1600" height="1029" loading="lazy" decoding="async">
+        </button>
+        <figcaption class="emu-caption">
+          <div class="emu-caption-head"><h2 data-zh="再电离历史代理精度" data-en="Reionization History Accuracy">再电离历史代理精度</h2><span class="emu-caption-num">FIG 05</span></div>
+          <p data-zh="100k 训练集下的全局中性氢历史与光学深度 τₑ 预测误差分布（τₑ RMSE = 1.72×10⁻⁴）。" data-en="Validation accuracy across global neutral-hydrogen histories and optical depth τₑ (τₑ RMSE = 1.72×10⁻⁴).">100k 训练集下的全局中性氢历史与光学深度 τₑ 预测误差分布（τₑ RMSE = 1.72×10⁻⁴）。</p>
+        </figcaption>
+      </figure>
+
+      <figure class="emu-card">
+        <button class="emu-thumb" type="button" data-zoom="./figures/fig5_ps_estimator_and_fullbox.webp" data-zh="06 · 21 cm 功率谱预测与全盒实测对比" data-en="06 · 21 cm Power Spectrum vs Full Box">
           <img src="./figures/fig5_ps_estimator_and_fullbox.webp" alt="21 cm power spectrum estimator vs full-box simulations" width="1600" height="724" loading="lazy" decoding="async">
         </button>
         <figcaption class="emu-caption">
-          <div class="emu-caption-head"><h2 data-zh="21 cm 功率谱与全盒校验" data-en="21 cm Power Spectrum &amp; Full-Box Check">21 cm 功率谱与全盒校验</h2><span class="emu-caption-num">FIG 03</span></div>
+          <div class="emu-caption-head"><h2 data-zh="21 cm 功率谱与全盒校验" data-en="21 cm Power Spectrum &amp; Full-Box Check">21 cm 功率谱与全盒校验</h2><span class="emu-caption-num">FIG 06</span></div>
           <p data-zh="PSX-emu 对高红移 21 cm 功率谱 P₂₁(k, z) 的代理预测与全盒数值模拟对照。" data-en="Emulated 21 cm power spectra P₂₁(k, z) cross-checked against full-box 21cmFAST runs.">PSX-emu 对高红移 21 cm 功率谱 P₂₁(k, z) 的代理预测与全盒数值模拟对照。</p>
         </figcaption>
       </figure>
 
       <figure class="emu-card">
-        <button class="emu-thumb" type="button" data-zoom="./figures/fig6_psx_independent_audit.webp" data-zh="04 · PSX 独立盲测与外样本审计" data-en="04 · PSX Independent Out-of-Sample Audit">
-          <img src="./figures/fig6_psx_independent_audit.webp" alt="PSX independent out-of-sample audit" width="1600" height="752" loading="lazy" decoding="async">
+        <button class="emu-thumb" type="button" data-zoom="./figures/fig6_psx_independent_audit.webp" data-zh="07 · PSX 300 点零重合独立盲测" data-en="07 · PSX 300-Point Zero-Overlap Audit">
+          <img src="./figures/fig6_psx_independent_audit.webp" alt="PSX 300-point independent zero-overlap audit" width="1600" height="752" loading="lazy" decoding="async">
         </button>
         <figcaption class="emu-caption">
-          <div class="emu-caption-head"><h2 data-zh="独立盲测与误差边界审计" data-en="Independent Audit &amp; Error Bounds">独立盲测与误差边界审计</h2><span class="emu-caption-num">FIG 04</span></div>
-          <p data-zh="在未参与训练的独立参数点上验证多红移功率谱与似然误差界。" data-en="Multi-redshift power-spectrum residuals evaluated on held-out independent test runs.">在未参与训练的独立参数点上验证多红移功率谱与似然误差界。</p>
+          <div class="emu-caption-head"><h2 data-zh="300 点零重合独立盲测" data-en="300-Point Zero-Overlap Audit">300 点零重合独立盲测</h2><span class="emu-caption-num">FIG 07</span></div>
+          <p data-zh="在严格零重合 300 独立测试点上验证 8-seed 模型精度（PS RMSE = 0.0485 dex，中位相对误差 2.10%）。" data-en="Zero-overlap 300-point audit of the 8-seed surrogate (PS RMSE = 0.0485 dex, median relative error 2.10%).">在严格零重合 300 独立测试点上验证 8-seed 模型精度（PS RMSE = 0.0485 dex，中位相对误差 2.10%）。</p>
         </figcaption>
       </figure>
 
       <figure class="emu-card">
-        <button class="emu-thumb" type="button" data-zoom="./figures/fig3_ic_and_posterior_val.webp" data-zh="05 · 随机 IC 方差与后验样本验证" data-en="05 · Random IC Variance &amp; Posterior Validation">
-          <img src="./figures/fig3_ic_and_posterior_val.webp" alt="Random IC variance and posterior validation" width="1600" height="762" loading="lazy" decoding="async">
+        <button class="emu-thumb" type="button" data-zoom="./figures/fig8_ard_gp_and_threeway_gmm.webp" data-zh="08 · Matérn-5/2 ARD-GP 光锥局部补丁" data-en="08 · Matérn-5/2 ARD-GP Lightcone Patches">
+          <img src="./figures/fig8_ard_gp_and_threeway_gmm.webp" alt="Matérn-5/2 ARD-GP local lightcone patches" width="1600" height="772" loading="lazy" decoding="async">
         </button>
         <figcaption class="emu-caption">
-          <div class="emu-caption-head"><h2 data-zh="随机 IC 方差与后验复检" data-en="Random IC Variance &amp; Posterior Check">随机 IC 方差与后验复检</h2><span class="emu-caption-num">FIG 05</span></div>
-          <p data-zh="量化宇宙方差引入的历史离散度，并对联合后验极值点执行 exact 模拟回代检验。" data-en="Cosmic-variance spread across random seeds paired with exact forward validation of posterior draws.">量化宇宙方差引入的历史离散度，并对联合后验极值点执行 exact 模拟回代检验。</p>
-        </figcaption>
-      </figure>
-
-      <figure class="emu-card">
-        <button class="emu-thumb" type="button" data-zoom="./figures/fig7_tstar_local_correction.webp" data-zh="06 · t⋆ 局部残差修正响应" data-en="06 · Local Residual Correction Across t⋆">
-          <img src="./figures/fig7_tstar_local_correction.webp" alt="Local residual correction across t_star" width="1600" height="752" loading="lazy" decoding="async">
-        </button>
-        <figcaption class="emu-caption">
-          <div class="emu-caption-head"><h2 data-zh="关键参数局部残差修正" data-en="Local Parameter Residual Correction">关键参数局部残差修正</h2><span class="emu-caption-num">FIG 06</span></div>
-          <p data-zh="检验特征时标等敏感天体物理方向上的局部 GP 修正稳定性。" data-en="Local GP correction behavior across sensitive astrophysical timescale directions.">检验特征时标等敏感天体物理方向上的局部 GP 修正稳定性。</p>
+          <div class="emu-caption-head"><h2 data-zh="ARD-GP 光锥局部残差补丁" data-en="ARD-GP Lightcone Residual Patches">ARD-GP 光锥局部残差补丁</h2><span class="emu-caption-num">FIG 08</span></div>
+          <p data-zh="局部 Matérn-5/2 ARD-GP 残差补丁将光锥 held-out L₂ p90 压低至 0.0278–0.0656。" data-en="Local Matérn-5/2 ARD-GP residual patches reduce held-out lightcone L₂ p90 to 0.0278–0.0656.">局部 Matérn-5/2 ARD-GP 残差补丁将光锥 held-out L₂ p90 压低至 0.0278–0.0656。</p>
         </figcaption>
       </figure>
     </section>
